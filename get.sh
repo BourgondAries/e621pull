@@ -1,3 +1,5 @@
+mkdir -p tags
+mkdir -p store
 tags=$(echo "$1" | sed 's/ /%20/g' | sed 's/\//%25-2F/g')
 count=0
 while [ true ]; do
