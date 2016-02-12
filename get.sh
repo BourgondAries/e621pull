@@ -2,7 +2,7 @@ mkdir -p tags
 mkdir -p store
 tags=$(echo "$1" | sed 's/ /%20/g' | sed 's/\//%25-2F/g')
 count=0
-while [ true ]; do
+while true; do
 	wget "https://e621.net/post/index/1/$tags?searchDefault=Search" -O temporary
 	lastpage=$(cat temporary | grep 'searchDefault=Search' | sed "s/<\/a>/\n/g" | tail -n 3 | head -n 1 | cut -d '>' -f 2)
 
