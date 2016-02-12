@@ -1,4 +1,5 @@
 tags=$(echo "$1" | sed 's/ /%20/g' | sed 's/\//%25-2F/g')
+count=0
 while [ true ]; do
 	wget "https://e621.net/post/index/1/$tags?searchDefault=Search" -O temporary
 	lastpage=$(cat temporary | grep 'searchDefault=Search' | sed "s/<\/a>/\n/g" | tail -n 3 | head -n 1 | cut -d '>' -f 2)
@@ -17,10 +18,13 @@ while [ true ]; do
 	file=$(cat temporary | grep static | head -n 4 | tail -n 1 | cut -d '"' -f 2)
 	wget "$file" -O tmpimg
 	image_tags=$(cat temporary | grep post_tags | head -n 2 | tail -n 1 | cut -d '>' -f 2 | cut -d '<' -f 1 | sed 's/\//+/g')
-	convert tmpimg tmpimg
-	mv tmpimg "$image_tags".png
+	convert tmpimg tmpimg.png
+	mv tmpimg.png "store/$count.png"
+	echo "$image_tags" > tags/$count
+	count=$((count+1))
+	echo $count
 
-	if [ false ]; then
+	if false; then
 		echo "$link" | xsel --clipboard
 		xdotool mousemove 600 950
 		sleep 1s
