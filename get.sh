@@ -1,6 +1,6 @@
 mkdir -p tags
 mkdir -p store
-tags=$(echo "$1" | sed 's/ /%20/g' | sed 's/\//%25-2F/g')
+tags=$(echo "$1" | sed 's/</%3C/g' | sed 's/>/%3E/g' | sed 's/ /%20/g' | sed 's/\//%25-2F/g')
 count=0
 while true; do
 	wget "https://e621.net/post/index/1/$tags?searchDefault=Search" -O temporary
